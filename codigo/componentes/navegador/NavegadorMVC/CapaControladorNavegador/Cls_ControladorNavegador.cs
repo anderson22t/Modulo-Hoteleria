@@ -270,7 +270,7 @@ namespace Capa_Controlador_Navegador
             }
 
             // Agregar controles al contenedor
-            
+
             foreach (var lbl in lLabels) contenedor.Controls.Add(lbl);
             foreach (var ctrl in lControles) contenedor.Controls.Add(ctrl);
 
@@ -326,7 +326,7 @@ namespace Capa_Controlador_Navegador
             int ultimaFila = dgv.Rows.Count - 1;
             if (dgv.AllowUserToAddRows)
                 ultimaFila -= 1;
-            if (ultimaFila < 0) return;  
+            if (ultimaFila < 0) return;
             dgv.CurrentCell = dgv.Rows[ultimaFila].Cells[0];
             dgv.Rows[ultimaFila].Selected = true;
             dgv.FirstDisplayedScrollingRowIndex = ultimaFila;
@@ -400,7 +400,7 @@ namespace Capa_Controlador_Navegador
 
 
 
-        public DataTable LlenarTabla(string tabla, string[] SAlias) 
+        public DataTable LlenarTabla(string tabla, string[] SAlias)
         {
             return sentencias.LlenarTabla(tabla, SAlias);
         }
@@ -607,7 +607,7 @@ namespace Capa_Controlador_Navegador
         //Modificacion de metodo: Crea DataGridView y recibe parametros para no chocar con ComboBoxes
         public DataGridView CrearDataGridView()
         {
-           // int PosYdgv = startY + 20; ver posiciones despues
+            // int PosYdgv = startY + 20; ver posiciones despues
 
 
             DataGridView dgv = new DataGridView();
@@ -629,7 +629,7 @@ namespace Capa_Controlador_Navegador
             // Asignar al atributo privado
             this.dgv = dgv;
 
-            return dgv; 
+            return dgv;
         }
 
 
@@ -751,7 +751,7 @@ namespace Capa_Controlador_Navegador
                 chk.Enabled = false;
             }
         }
-        
+
 
     }
 }
