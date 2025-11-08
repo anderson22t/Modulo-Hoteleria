@@ -34,7 +34,6 @@ namespace Capa_Vista_Hoteleria
             this.lblContrasena = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.btnIniciarSesion = new System.Windows.Forms.Button();
-            this.lblkRecuperarContrasena = new System.Windows.Forms.LinkLabel();
             this.txtContrasena = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
@@ -93,18 +92,6 @@ namespace Capa_Vista_Hoteleria
             this.btnIniciarSesion.UseVisualStyleBackColor = false;
             this.btnIniciarSesion.Click += new System.EventHandler(this.btnIniciarSesion_Click_1);
             // 
-            // lblkRecuperarContrasena
-            // 
-            this.lblkRecuperarContrasena.AutoSize = true;
-            this.lblkRecuperarContrasena.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.lblkRecuperarContrasena.Location = new System.Drawing.Point(199, 212);
-            this.lblkRecuperarContrasena.Name = "lblkRecuperarContrasena";
-            this.lblkRecuperarContrasena.Size = new System.Drawing.Size(182, 20);
-            this.lblkRecuperarContrasena.TabIndex = 35;
-            this.lblkRecuperarContrasena.TabStop = true;
-            this.lblkRecuperarContrasena.Text = "Recuperar contraseña";
-            this.lblkRecuperarContrasena.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblkRecuperarContrasena_LinkClicked_1);
-            // 
             // txtContrasena
             // 
             this.txtContrasena.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
@@ -142,7 +129,7 @@ namespace Capa_Vista_Hoteleria
             // 
             this.Btn_Cerrar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Cerrar.BackgroundImage")));
             this.Btn_Cerrar.Location = new System.Drawing.Point(547, 14);
-            this.Btn_Cerrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Btn_Cerrar.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_Cerrar.Name = "Btn_Cerrar";
             this.Btn_Cerrar.Size = new System.Drawing.Size(41, 38);
             this.Btn_Cerrar.TabIndex = 3;
@@ -171,11 +158,10 @@ namespace Capa_Vista_Hoteleria
             this.Controls.Add(this.lblContrasena);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.btnIniciarSesion);
-            this.Controls.Add(this.lblkRecuperarContrasena);
             this.Controls.Add(this.txtContrasena);
             this.Controls.Add(this.txtUsuario);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Frm_Login_Hoteleria";
             this.Text = "Frm_Login_Hoteleria";
             this.Pnl_Superior.ResumeLayout(false);
@@ -191,7 +177,6 @@ namespace Capa_Vista_Hoteleria
         private System.Windows.Forms.Label lblContrasena;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Button btnIniciarSesion;
-        private System.Windows.Forms.LinkLabel lblkRecuperarContrasena;
         private System.Windows.Forms.TextBox txtContrasena;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Panel Pnl_Superior;

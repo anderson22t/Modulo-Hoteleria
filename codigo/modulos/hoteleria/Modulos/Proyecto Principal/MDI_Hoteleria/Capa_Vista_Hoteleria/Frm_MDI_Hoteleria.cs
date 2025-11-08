@@ -17,6 +17,7 @@ using Capa_Vista_IE;
 using Capa_Vista_MH;
 using CapaVistaOP;
 using CapaVistaProduccion;
+using Capa_Vista_Cierre;
 
 namespace Capa_Vista_Hoteleria
 {
@@ -214,6 +215,14 @@ namespace Capa_Vista_Hoteleria
             Frm_Pago Pago = new Frm_Pago();
             Pago.MdiParent = this;
             Pago.Show();
+        }
+
+        private void cierreDiarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CerrarFormulariosHijos();
+            Frm_Cierre cierre = new Frm_Cierre();
+            cierre.MdiParent = this;
+            cierre.Show();
         }
     }
 }
