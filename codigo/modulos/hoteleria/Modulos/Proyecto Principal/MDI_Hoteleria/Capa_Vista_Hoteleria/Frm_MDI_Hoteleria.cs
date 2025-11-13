@@ -19,6 +19,7 @@ using CapaVistaOP;
 using Capa_Vista_Receta;
 using Capa_Vista_Produccion;
 using Capa_Vista_Cierre;
+using Capa_Vista_Polizas;
 
 
 namespace Capa_Vista_Hoteleria

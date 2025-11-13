@@ -108,7 +108,7 @@ namespace Capa_Vista_Hoteleria
             this.menuStrip1.MaximumSize = new System.Drawing.Size(0, 503);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 1069, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1668, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1518, 28);
             this.menuStrip1.TabIndex = 98;
             this.menuStrip1.Text = "MenuStrip";
             // 
@@ -381,6 +381,7 @@ namespace Capa_Vista_Hoteleria
             this.Name = "Frm_MDI_Hoteleria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Frm_MDI_Hoteleria";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Pnl_Superior.ResumeLayout(false);
             this.Pnl_Superior.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
