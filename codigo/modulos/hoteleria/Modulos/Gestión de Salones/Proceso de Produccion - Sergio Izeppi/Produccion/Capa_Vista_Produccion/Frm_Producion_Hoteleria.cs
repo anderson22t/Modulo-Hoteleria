@@ -345,7 +345,10 @@ namespace Capa_Vista_Produccion
 
             var dRow = Dgv_Platos.Rows[e.RowIndex];
 
-            // Comprobar que la celda no sea nula
+            // Guardar el ID del detalle (REQUERIDO PARA ELIMINAR)
+            if (dRow.Cells["Pk_Id_Detalle"].Value != null)
+                Txt_ID_Pedido.Text = dRow.Cells["Pk_Id_Detalle"].Value.ToString();
+
             if (dRow.Cells["Cmp_Nombre_Platillo"].Value != null)
                 Cbo_Menu.Text = dRow.Cells["Cmp_Nombre_Platillo"].Value.ToString();
 
@@ -358,6 +361,7 @@ namespace Capa_Vista_Produccion
             if (dRow.Cells["Cmp_Subtotal"].Value != null)
                 Txt_Subtotal.Text = dRow.Cells["Cmp_Subtotal"].Value.ToString();
         }
+
 
         // ✅ Limpiar
         private void pro_LimpiarCampos2()

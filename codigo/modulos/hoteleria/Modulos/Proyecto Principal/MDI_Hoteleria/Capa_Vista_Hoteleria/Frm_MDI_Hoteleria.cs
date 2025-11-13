@@ -19,6 +19,7 @@ using CapaVistaOP;
 using Capa_Vista_Receta;
 using Capa_Vista_Produccion;
 using Capa_Vista_Cierre;
+using Capa_Vista_Polizas;
 
 
 namespace Capa_Vista_Hoteleria
@@ -69,10 +70,10 @@ namespace Capa_Vista_Hoteleria
 
         private void polizaContableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CerrarFormulariosHijos();
+            /*CerrarFormulariosHijos();
             Frm_Poliza_Turismo poliza = new Frm_Poliza_Turismo();
             poliza.MdiParent = this;
-            poliza.Show();
+            poliza.Show();*/
         }
 
         private void mantenimientoHabitacionesToolStripMenuItem_Click(object sender, EventArgs e)

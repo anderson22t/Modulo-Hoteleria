@@ -56,6 +56,9 @@
     <Reference Include="Capa_Vista_MH">
       <HintPath>..\..\..\Gestión de Salones\Mantenimiento Hoteleria - Fernando Cahuex\Mantenimiento_Hoteleria_MVC\Capa_Vista_MH\bin\Debug\Capa_Vista_MH.dll</HintPath>
     </Reference>
+    <Reference Include="Capa_Vista_Polizas">
+      <HintPath>..\..\..\Gestión de Habitaciones\Enlace de Contabilidad - Carlo Sosa\Polizas Locales\Polizas_LocalesMVC\Capa_Vista_Polizas\bin\Debug\Capa_Vista_Polizas.dll</HintPath>
+    </Reference>
     <Reference Include="Capa_Vista_Produccion">
       <HintPath>..\..\..\Gestión de Salones\Proceso de Produccion - Sergio Izeppi\Produccion\Capa_Vista_Produccion\bin\Debug\Capa_Vista_Produccion.dll</HintPath>
     </Reference>

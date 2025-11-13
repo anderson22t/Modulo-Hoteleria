@@ -59,10 +59,10 @@ namespace Capa_Vista_Hoteleria
             this.ordenesDeCompraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.foliosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cierreDiarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cierreDiarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Pnl_Superior.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -107,7 +107,7 @@ namespace Capa_Vista_Hoteleria
             this.menuStrip1.MaximumSize = new System.Drawing.Size(0, 503);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 1069, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1668, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1518, 28);
             this.menuStrip1.TabIndex = 98;
             this.menuStrip1.Text = "MenuStrip";
             // 
@@ -323,9 +323,16 @@ namespace Capa_Vista_Hoteleria
             // foliosToolStripMenuItem
             // 
             this.foliosToolStripMenuItem.Name = "foliosToolStripMenuItem";
-            this.foliosToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.foliosToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.foliosToolStripMenuItem.Text = "Folios";
             this.foliosToolStripMenuItem.Click += new System.EventHandler(this.foliosToolStripMenuItem_Click);
+            // 
+            // cierreDiarioToolStripMenuItem
+            // 
+            this.cierreDiarioToolStripMenuItem.Name = "cierreDiarioToolStripMenuItem";
+            this.cierreDiarioToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.cierreDiarioToolStripMenuItem.Text = "Cierre Diario";
+            this.cierreDiarioToolStripMenuItem.Click += new System.EventHandler(this.cierreDiarioToolStripMenuItem_Click);
             // 
             // asignacionesToolStripMenuItem
             // 
@@ -352,13 +359,6 @@ namespace Capa_Vista_Hoteleria
             this.toolStripStatusLabel.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel.Text = "Estado";
             // 
-            // cierreDiarioToolStripMenuItem
-            // 
-            this.cierreDiarioToolStripMenuItem.Name = "cierreDiarioToolStripMenuItem";
-            this.cierreDiarioToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.cierreDiarioToolStripMenuItem.Text = "Cierre Diario";
-            this.cierreDiarioToolStripMenuItem.Click += new System.EventHandler(this.cierreDiarioToolStripMenuItem_Click);
-            // 
             // Frm_MDI_Hoteleria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -372,6 +372,7 @@ namespace Capa_Vista_Hoteleria
             this.Name = "Frm_MDI_Hoteleria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Frm_MDI_Hoteleria";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Pnl_Superior.ResumeLayout(false);
             this.Pnl_Superior.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

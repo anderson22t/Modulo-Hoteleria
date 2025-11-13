@@ -123,18 +123,21 @@ namespace Capa_Modelo_Produccion
         public void pro_EliminarDetalle(int iIdDetalle)
         {
             Cls_Conexion_Produccion pCn = new Cls_Conexion_Produccion();
-            string sSql = "DELETE FROM Tbl_Room_Service_Detalle WHERE Pk_Id_Detalle=?";
+            string sSql = "DELETE FROM Tbl_Room_Service_Detalle WHERE Pk_Id_Detalle = ?";
 
             using (OdbcConnection pCon = pCn.conexion())
             {
                 using (OdbcCommand pCmd = new OdbcCommand(sSql, pCon))
                 {
-                    pCmd.Parameters.AddWithValue("@Pk_Id_Detalle", iIdDetalle);
+                    // ODBC requiere parámetros posicionales SIN nombre
+                    pCmd.Parameters.Add("", OdbcType.Int).Value = iIdDetalle;
+
                     pCmd.ExecuteNonQuery();
                 }
                 pCn.desconexion(pCon);
             }
         }
+
 
         // ✅ PROCEDIMIENTOS (void) - RESERVAS A LA CARTA
         public void pro_InsertarReservaAlacarta(int iIdHuesped, int iIdHabitacion, int iIdSalon, DateTime dFechaReserva, TimeSpan tHoraReserva, int iNumComensales, int iEstado)
@@ -223,10 +226,15 @@ namespace Capa_Modelo_Produccion
         {
             Cls_Conexion_Produccion pCn = new Cls_Conexion_Produccion();
             DataTable dTabla = new DataTable();
-            string sSql = "SELECT d.Pk_Id_Detalle, d.FK_Id_Room, m.Cmp_Nombre_Platillo AS Plato, " +
-                         "d.Cmp_Cantidad, d.Cmp_Precio_Unitario, d.Cmp_Subtotal " +
-                         "FROM Tbl_Room_Service_Detalle d " +
-                         "INNER JOIN Tbl_Menu m ON d.FK_Id_Menu = m.Pk_Id_Menu";
+            string sSql = @"SELECT
+                d.Pk_Id_Detalle,
+                m.Cmp_Nombre_Platillo AS `Nombre plato`,
+                d.Cmp_Cantidad AS Cantidad,
+                d.Cmp_Precio_Unitario AS `Precio Unitario`,
+                d.Cmp_Subtotal AS Subtotal
+                FROM Tbl_Room_Service_Detalle d
+                INNER JOIN Tbl_Menu m
+                ON d.FK_Id_Menu = m.Pk_Id_Menu";
 
             using (OdbcConnection pCon = pCn.conexion())
             {
@@ -289,21 +297,22 @@ namespace Capa_Modelo_Produccion
             using (OdbcConnection pCon = pCn.conexion())
             {
                 string sSql = @"
-            SELECT 
-                r.PK_Id_Reserva,
-                r.Fk_Id_Huesped,
-                r.Fk_Id_Habitacion,
-                s.Cmp_Nombre_Salon AS SalonNombre,
-                r.Cmp_Fecha_Reserva,
-                r.Cmp_Hora_reserva,
-                r.Cmp_Numero_Comensales,
-                CASE 
-                    WHEN r.Cmp_Estado = 1 THEN 'Activa'
-                    WHEN r.Cmp_Estado = 0 THEN 'Cancelada'
-                    ELSE 'Desconocido'
-                END AS Cmp_Estado
-            FROM Tbl_Reservas_Alacarta r
-            LEFT JOIN Tbl_Salones s ON r.Fk_Id_Salon = s.Pk_Id_Salon";
+        SELECT 
+            r.PK_Id_Reserva,
+            r.Fk_Id_Huesped,
+            r.Fk_Id_Habitacion,
+            r.Fk_Id_Salon,                          
+            s.Cmp_Nombre_Salon AS SalonNombre,
+            r.Cmp_Fecha_Reserva,
+            r.Cmp_Hora_reserva,
+            r.Cmp_Numero_Comensales,
+            CASE 
+                WHEN r.Cmp_Estado = 1 THEN 'Activa'
+                WHEN r.Cmp_Estado = 0 THEN 'Cancelada'
+                ELSE 'Desconocido'
+            END AS Cmp_Estado
+        FROM Tbl_Reservas_Alacarta r
+        LEFT JOIN Tbl_Salones s ON r.Fk_Id_Salon = s.Pk_Id_Salon";
 
                 using (OdbcDataAdapter pDa = new OdbcDataAdapter(sSql, pCon))
                 {
@@ -313,6 +322,7 @@ namespace Capa_Modelo_Produccion
 
             return dTabla;
         }
+
 
         public DataTable fun_CargarSalones()
         {
@@ -437,7 +447,7 @@ namespace Capa_Modelo_Produccion
         {
             Cls_Conexion_Produccion pCn = new Cls_Conexion_Produccion();
             bool existe = false;
-            string sSql = "SELECT COUNT(*) FROM Tbl_Salon WHERE Pk_Id_Salon = ?";
+            string sSql = "SELECT COUNT(*) FROM Tbl_Salones WHERE Pk_Id_Salon = ?";
 
             using (OdbcConnection pCon = pCn.conexion())
             {
