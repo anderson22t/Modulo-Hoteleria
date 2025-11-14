@@ -222,25 +222,28 @@ namespace Capa_Modelo_Produccion
             return dTabla;
         }
 
-        public DataTable fun_CargarDetalles()
+        public DataTable fun_CargarDetalles(int iIdRoom)
         {
             Cls_Conexion_Produccion pCn = new Cls_Conexion_Produccion();
             DataTable dTabla = new DataTable();
-            string sSql = @"SELECT
-                d.Pk_Id_Detalle,
-                m.Cmp_Nombre_Platillo AS `Nombre plato`,
-                d.Cmp_Cantidad AS Cantidad,
-                d.Cmp_Precio_Unitario AS `Precio Unitario`,
-                d.Cmp_Subtotal AS Subtotal
-                FROM Tbl_Room_Service_Detalle d
-                INNER JOIN Tbl_Menu m
-                ON d.FK_Id_Menu = m.Pk_Id_Menu";
+            string sSql = "SELECT d.Pk_Id_Detalle, d.FK_Id_Room, m.Cmp_Nombre_Platillo AS Plato, " +
+                         "d.Cmp_Cantidad, d.Cmp_Precio_Unitario, d.Cmp_Subtotal " +
+                         "FROM Tbl_Room_Service_Detalle d " +
+                         "INNER JOIN Tbl_Menu m ON d.FK_Id_Menu = m.Pk_Id_Menu";
 
             using (OdbcConnection pCon = pCn.conexion())
             {
-                using (OdbcDataAdapter pDa = new OdbcDataAdapter(sSql, pCon))
+                // 1. Usar OdbcCommand para enlazar el parámetro
+                using (OdbcCommand pCmd = new OdbcCommand(sSql, pCon))
                 {
-                    pDa.Fill(dTabla);
+                    // 2. Enlazar el valor del parámetro 'iIdRoom'
+                    pCmd.Parameters.AddWithValue("@FK_Id_Room", iIdRoom);
+
+                    // 3. Usar el OdbcDataAdapter con el Command que ya tiene el parámetro
+                    using (OdbcDataAdapter pDa = new OdbcDataAdapter(pCmd))
+                    {
+                        pDa.Fill(dTabla);
+                    }
                 }
                 pCn.desconexion(pCon);
             }
