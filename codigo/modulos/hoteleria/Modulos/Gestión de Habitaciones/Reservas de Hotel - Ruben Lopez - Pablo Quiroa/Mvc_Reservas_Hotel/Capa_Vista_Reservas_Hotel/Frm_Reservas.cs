@@ -26,6 +26,10 @@ namespace Capa_Vista_Reservas_Hotel
 
         private void Frm_Reservas_Load(object sender, EventArgs e)
         {
+
+            Cmb_Numero_Documento.DropDownStyle = ComboBoxStyle.DropDownList;
+            CargarNumerosDocumento();
+
             // Inicializa calendario popup
             InicializarPopupCalendario();
 
@@ -40,6 +44,13 @@ namespace Capa_Vista_Reservas_Hotel
             Cmb_Estado_Reserva.Items.Clear();
             Cmb_Estado_Reserva.Items.AddRange(new[] { "Pendiente", "Confirmada", "Cancelada" });
             Cmb_Estado_Reserva.SelectedIndex = 0;
+
+            // Cuando cambia el tipo de documento, recargar los números
+            Cmb_Tipo_Documento.SelectedIndexChanged += (s, ev) =>
+            {
+                CargarNumerosDocumento();
+            };
+
 
             // Datos dinámicos
             CargarHabitaciones();
@@ -88,6 +99,52 @@ namespace Capa_Vista_Reservas_Hotel
             }
         }
 
+        private void ValidarCapacidadNumeric(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Txt_Capacidad.Text)) return;
+
+            int capacidad = int.Parse(Txt_Capacidad.Text);
+            int adultos = (int)Nud_Adultos.Value;
+            int ninos = (int)Nud_Ninos.Value;
+
+            if (adultos + ninos > capacidad)
+            {
+                MessageBox.Show(
+                    $"La habitación solo permite {capacidad} personas.",
+                    "Capacidad excedida",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                // Reset a valores correctos
+                Nud_Ninos.Value = 0;
+            }
+        }
+
+
+        private void ConfigurarNumericUpDowns(int capacidad)
+        {
+            // Adultos mínimo 1
+            Nud_Adultos.Minimum = 1;
+            Nud_Adultos.Maximum = capacidad;
+            Nud_Adultos.Value = 1;
+
+            // Niños puede ser 0
+            Nud_Ninos.Minimum = 0;
+            Nud_Ninos.Maximum = capacidad;
+            Nud_Ninos.Value = 0;
+
+            // Eventos de validación
+            Nud_Adultos.ValueChanged -= ValidarCapacidadNumeric;
+            Nud_Ninos.ValueChanged -= ValidarCapacidadNumeric;
+
+            Nud_Adultos.ValueChanged += ValidarCapacidadNumeric;
+            Nud_Ninos.ValueChanged += ValidarCapacidadNumeric;
+        }
+
+
+
+
         private void Cmb_Habitacion_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Cmb_Habitacion.SelectedValue == null) return;
@@ -97,7 +154,11 @@ namespace Capa_Vista_Reservas_Hotel
                 if (decimal.TryParse(row["Tarifa"].ToString(), out decimal tarifa))
                     Txt_Tarifa.Text = tarifa.ToString("F2");
 
-                Txt_Capacidad.Text = row["Capacidad"].ToString();
+                int capacidad = Convert.ToInt32(row["Capacidad"]);
+                Txt_Capacidad.Text = capacidad.ToString();
+
+                // Ajustar numeric updown
+                ConfigurarNumericUpDowns(capacidad);
 
                 if (int.TryParse(row["IdHabitacion"].ToString(), out int idHab))
                     CargarFechasOcupadas(idHab);
@@ -256,7 +317,9 @@ namespace Capa_Vista_Reservas_Hotel
                 int idBuffet = controlador.ObtenerBuffetIdIncluido();
                 DateTime dEntrada = Dtp_Entrada.Value.Date;
                 DateTime dSalida = Dtp_Salida.Value.Date;
-                int numHuespedes = int.Parse(Txt_Capacidad.Text);
+                int adultos = (int)Nud_Adultos.Value;
+                int ninos = (int)Nud_Ninos.Value;
+                int numHuespedes = adultos + ninos;
                 string sPeticiones = Txt_Peticiones.Text?.Trim();
                 string sEstado = Cmb_Estado_Reserva.Text;
 
@@ -297,27 +360,29 @@ namespace Capa_Vista_Reservas_Hotel
         {
             try
             {
-                string sTipo = Cmb_Tipo_Documento.Text.Trim();
-                string sNumero = Txt_Numero_Documento.Text.Trim();
+                string tipo = Cmb_Tipo_Documento.Text.Trim();
+                string numero = Cmb_Numero_Documento.Text.Trim();
 
-                if (string.IsNullOrEmpty(sTipo) || string.IsNullOrEmpty(sNumero))
+                if (string.IsNullOrWhiteSpace(tipo) || string.IsNullOrWhiteSpace(numero))
                 {
-                    MessageBox.Show("Seleccione el tipo de documento e ingrese el número.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Debe seleccionar el tipo de documento y el número.", "Aviso");
                     return;
                 }
 
-                DataRow dr = controlador.ObtenerHuesped(sTipo, sNumero);
+                DataRow dr = controlador.ObtenerHuesped(tipo, numero);
+
                 if (dr != null)
                 {
-                    Txt_Nombre_Huesped.Text = Convert.ToString(dr["Cmp_Nombre"]);
-                    Txt_Apellido_Huesped.Text = Convert.ToString(dr["Cmp_Apellido"]);
-                    int iDHuesped = Convert.ToInt32(dr["Pk_Id_Huesped"]);
-                    int iPuntos = controlador.ObtenerPuntosHuesped(iDHuesped);
-                    Txt_Puntos_Huesped.Text = iPuntos.ToString();
+                    Txt_Nombre_Huesped.Text = dr["Cmp_Nombre"].ToString();
+                    Txt_Apellido_Huesped.Text = dr["Cmp_Apellido"].ToString();
+
+                    int idHuesped = Convert.ToInt32(dr["Pk_Id_Huesped"]);
+                    int puntos = controlador.ObtenerPuntosHuesped(idHuesped);
+                    Txt_Puntos_Huesped.Text = puntos.ToString();
                 }
                 else
                 {
-                    MessageBox.Show("No se encontró ningún huésped con esos datos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("No se encontró el huésped.", "Aviso");
                     Txt_Nombre_Huesped.Clear();
                     Txt_Apellido_Huesped.Clear();
                     Txt_Puntos_Huesped.Clear();
@@ -325,22 +390,30 @@ namespace Capa_Vista_Reservas_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al buscar huésped: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al buscar huésped: " + ex.Message);
             }
         }
+
 
         private int ObtenerIdHuesped()
         {
             string sTipo = Cmb_Tipo_Documento.Text.Trim();
-            string sNumero = Txt_Numero_Documento.Text.Trim();
+            string sNumero = Cmb_Numero_Documento.SelectedValue?.ToString();
+
+            if (string.IsNullOrWhiteSpace(sNumero))
+                throw new Exception("Debe seleccionar un número de documento.");
+
             DataRow dr = controlador.ObtenerHuesped(sTipo, sNumero);
-            if (dr == null) throw new Exception("Huésped no encontrado.");
+
+            if (dr == null)
+                throw new Exception("Huésped no encontrado.");
+
             return Convert.ToInt32(dr["Pk_Id_Huesped"]);
         }
 
+
         private void Btn_Limpiar_Click(object sender, EventArgs e)
         {
-            Txt_Numero_Documento.Clear();
             Txt_Nombre_Huesped.Clear();
             Txt_Apellido_Huesped.Clear();
             Txt_Tarifa.Clear();
@@ -356,7 +429,6 @@ namespace Capa_Vista_Reservas_Hotel
 
             Dtp_Entrada.Value = DateTime.Today;
             Dtp_Salida.Value = DateTime.Today.AddDays(1);
-            Txt_Numero_Documento.Focus();
         }
 
         private void Btn_Modificar_Click(object sender, EventArgs e)
@@ -364,5 +436,17 @@ namespace Capa_Vista_Reservas_Hotel
             Frm_Modificar_Reserva modificar = new Frm_Modificar_Reserva();
             modificar.Show();
         }
+
+        private void CargarNumerosDocumento()
+        {
+            string tipo = Cmb_Tipo_Documento.Text.Trim();
+            DataTable dt = controlador.ObtenerDocumentosPorTipo(tipo);
+
+            Cmb_Numero_Documento.DataSource = dt;
+            Cmb_Numero_Documento.DisplayMember = "Cmp_Numero_Documento";
+            Cmb_Numero_Documento.ValueMember = "Cmp_Numero_Documento";
+            Cmb_Numero_Documento.SelectedIndex = -1;
+        }
+
     }
 }
