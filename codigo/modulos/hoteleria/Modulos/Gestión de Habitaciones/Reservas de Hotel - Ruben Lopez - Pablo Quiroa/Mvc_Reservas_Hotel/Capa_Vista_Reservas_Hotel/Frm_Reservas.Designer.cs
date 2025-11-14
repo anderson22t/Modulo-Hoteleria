@@ -30,8 +30,12 @@ namespace Capa_Vista_Reservas_Hotel
         private void InitializeComponent()
         {
             this.Btn_Limpiar = new System.Windows.Forms.Button();
-            this.Btn_Nuevo = new System.Windows.Forms.Button();
             this.Gpb_Datos = new System.Windows.Forms.GroupBox();
+            this.Nud_Ninos = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Nud_Adultos = new System.Windows.Forms.NumericUpDown();
+            this.Txt_Capacidad = new System.Windows.Forms.TextBox();
             this.Btn_Calcular_Total = new System.Windows.Forms.Button();
             this.Txt_Buffet_Descripcion = new System.Windows.Forms.TextBox();
             this.Lbl_Buffet_Incluido = new System.Windows.Forms.Label();
@@ -59,13 +63,14 @@ namespace Capa_Vista_Reservas_Hotel
             this.Btn_Buscar_Huesped = new System.Windows.Forms.Button();
             this.Txt_Puntos_Huesped = new System.Windows.Forms.TextBox();
             this.Lbl_Puntos_Disponibles = new System.Windows.Forms.Label();
-            this.Txt_Numero_Documento = new System.Windows.Forms.TextBox();
             this.Cmb_Habitacion = new System.Windows.Forms.ComboBox();
             this.Lbl_Habitacion = new System.Windows.Forms.Label();
             this.Cmb_Tipo_Documento = new System.Windows.Forms.ComboBox();
             this.Lbl_Huesped = new System.Windows.Forms.Label();
-            this.Txt_Capacidad = new System.Windows.Forms.TextBox();
+            this.Cmb_Numero_Documento = new System.Windows.Forms.ComboBox();
             this.Gpb_Datos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Ninos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Adultos)).BeginInit();
             this.Gpb_Informacion_Huesped.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,24 +91,12 @@ namespace Capa_Vista_Reservas_Hotel
             this.Btn_Limpiar.UseVisualStyleBackColor = false;
             this.Btn_Limpiar.Click += new System.EventHandler(this.Btn_Limpiar_Click);
             // 
-            // Btn_Nuevo
-            // 
-            this.Btn_Nuevo.BackColor = System.Drawing.SystemColors.Control;
-            this.Btn_Nuevo.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_Nuevo.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_Nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Nuevo.Image = global::Capa_Vista_Reservas_Hotel.Properties.Resources.icono_agregar;
-            this.Btn_Nuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Nuevo.Location = new System.Drawing.Point(962, 16);
-            this.Btn_Nuevo.Margin = new System.Windows.Forms.Padding(2);
-            this.Btn_Nuevo.Name = "Btn_Nuevo";
-            this.Btn_Nuevo.Size = new System.Drawing.Size(41, 44);
-            this.Btn_Nuevo.TabIndex = 107;
-            this.Btn_Nuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_Nuevo.UseVisualStyleBackColor = false;
-            // 
             // Gpb_Datos
             // 
+            this.Gpb_Datos.Controls.Add(this.Nud_Ninos);
+            this.Gpb_Datos.Controls.Add(this.label2);
+            this.Gpb_Datos.Controls.Add(this.label1);
+            this.Gpb_Datos.Controls.Add(this.Nud_Adultos);
             this.Gpb_Datos.Controls.Add(this.Txt_Capacidad);
             this.Gpb_Datos.Controls.Add(this.Btn_Calcular_Total);
             this.Gpb_Datos.Controls.Add(this.Txt_Buffet_Descripcion);
@@ -124,14 +117,57 @@ namespace Capa_Vista_Reservas_Hotel
             this.Gpb_Datos.Margin = new System.Windows.Forms.Padding(2);
             this.Gpb_Datos.Name = "Gpb_Datos";
             this.Gpb_Datos.Padding = new System.Windows.Forms.Padding(2);
-            this.Gpb_Datos.Size = new System.Drawing.Size(1110, 256);
+            this.Gpb_Datos.Size = new System.Drawing.Size(1110, 316);
             this.Gpb_Datos.TabIndex = 112;
             this.Gpb_Datos.TabStop = false;
             this.Gpb_Datos.Text = "Datos";
             // 
+            // Nud_Ninos
+            // 
+            this.Nud_Ninos.Location = new System.Drawing.Point(235, 166);
+            this.Nud_Ninos.Name = "Nud_Ninos";
+            this.Nud_Ninos.Size = new System.Drawing.Size(49, 25);
+            this.Nud_Ninos.TabIndex = 36;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(175, 168);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 17);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "Niños:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 168);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(66, 17);
+            this.label1.TabIndex = 34;
+            this.label1.Text = "Adultos:";
+            // 
+            // Nud_Adultos
+            // 
+            this.Nud_Adultos.Location = new System.Drawing.Point(87, 166);
+            this.Nud_Adultos.Name = "Nud_Adultos";
+            this.Nud_Adultos.Size = new System.Drawing.Size(49, 25);
+            this.Nud_Adultos.TabIndex = 33;
+            // 
+            // Txt_Capacidad
+            // 
+            this.Txt_Capacidad.Location = new System.Drawing.Point(202, 113);
+            this.Txt_Capacidad.Name = "Txt_Capacidad";
+            this.Txt_Capacidad.ReadOnly = true;
+            this.Txt_Capacidad.Size = new System.Drawing.Size(100, 25);
+            this.Txt_Capacidad.TabIndex = 32;
+            this.Txt_Capacidad.TabStop = false;
+            // 
             // Btn_Calcular_Total
             // 
-            this.Btn_Calcular_Total.Location = new System.Drawing.Point(984, 166);
+            this.Btn_Calcular_Total.Location = new System.Drawing.Point(991, 214);
             this.Btn_Calcular_Total.Name = "Btn_Calcular_Total";
             this.Btn_Calcular_Total.Size = new System.Drawing.Size(86, 46);
             this.Btn_Calcular_Total.TabIndex = 31;
@@ -141,17 +177,17 @@ namespace Capa_Vista_Reservas_Hotel
             // 
             // Txt_Buffet_Descripcion
             // 
-            this.Txt_Buffet_Descripcion.Location = new System.Drawing.Point(609, 40);
+            this.Txt_Buffet_Descripcion.Location = new System.Drawing.Point(615, 64);
             this.Txt_Buffet_Descripcion.Multiline = true;
             this.Txt_Buffet_Descripcion.Name = "Txt_Buffet_Descripcion";
             this.Txt_Buffet_Descripcion.ReadOnly = true;
-            this.Txt_Buffet_Descripcion.Size = new System.Drawing.Size(234, 84);
+            this.Txt_Buffet_Descripcion.Size = new System.Drawing.Size(234, 95);
             this.Txt_Buffet_Descripcion.TabIndex = 29;
             // 
             // Lbl_Buffet_Incluido
             // 
             this.Lbl_Buffet_Incluido.AutoSize = true;
-            this.Lbl_Buffet_Incluido.Location = new System.Drawing.Point(670, 20);
+            this.Lbl_Buffet_Incluido.Location = new System.Drawing.Point(675, 34);
             this.Lbl_Buffet_Incluido.Name = "Lbl_Buffet_Incluido";
             this.Lbl_Buffet_Incluido.Size = new System.Drawing.Size(111, 17);
             this.Lbl_Buffet_Incluido.TabIndex = 28;
@@ -160,7 +196,7 @@ namespace Capa_Vista_Reservas_Hotel
             // Txt_Total_Reserva
             // 
             this.Txt_Total_Reserva.BackColor = System.Drawing.SystemColors.Window;
-            this.Txt_Total_Reserva.Location = new System.Drawing.Point(946, 223);
+            this.Txt_Total_Reserva.Location = new System.Drawing.Point(953, 271);
             this.Txt_Total_Reserva.Margin = new System.Windows.Forms.Padding(2);
             this.Txt_Total_Reserva.Name = "Txt_Total_Reserva";
             this.Txt_Total_Reserva.ReadOnly = true;
@@ -170,7 +206,7 @@ namespace Capa_Vista_Reservas_Hotel
             // Lbl_Total_Reserva
             // 
             this.Lbl_Total_Reserva.AutoSize = true;
-            this.Lbl_Total_Reserva.Location = new System.Drawing.Point(821, 226);
+            this.Lbl_Total_Reserva.Location = new System.Drawing.Point(828, 274);
             this.Lbl_Total_Reserva.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Lbl_Total_Reserva.Name = "Lbl_Total_Reserva";
             this.Lbl_Total_Reserva.Size = new System.Drawing.Size(105, 17);
@@ -182,7 +218,7 @@ namespace Capa_Vista_Reservas_Hotel
             this.Cmb_Estado_Reserva.BackColor = System.Drawing.SystemColors.Window;
             this.Cmb_Estado_Reserva.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Cmb_Estado_Reserva.FormattingEnabled = true;
-            this.Cmb_Estado_Reserva.Location = new System.Drawing.Point(210, 178);
+            this.Cmb_Estado_Reserva.Location = new System.Drawing.Point(210, 255);
             this.Cmb_Estado_Reserva.Margin = new System.Windows.Forms.Padding(2);
             this.Cmb_Estado_Reserva.Name = "Cmb_Estado_Reserva";
             this.Cmb_Estado_Reserva.Size = new System.Drawing.Size(188, 25);
@@ -191,7 +227,7 @@ namespace Capa_Vista_Reservas_Hotel
             // Lbl_Estado_Reserva
             // 
             this.Lbl_Estado_Reserva.AutoSize = true;
-            this.Lbl_Estado_Reserva.Location = new System.Drawing.Point(10, 186);
+            this.Lbl_Estado_Reserva.Location = new System.Drawing.Point(10, 263);
             this.Lbl_Estado_Reserva.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Lbl_Estado_Reserva.Name = "Lbl_Estado_Reserva";
             this.Lbl_Estado_Reserva.Size = new System.Drawing.Size(116, 17);
@@ -227,7 +263,7 @@ namespace Capa_Vista_Reservas_Hotel
             // Txt_Peticiones
             // 
             this.Txt_Peticiones.BackColor = System.Drawing.SystemColors.Window;
-            this.Txt_Peticiones.Location = new System.Drawing.Point(210, 149);
+            this.Txt_Peticiones.Location = new System.Drawing.Point(210, 226);
             this.Txt_Peticiones.Margin = new System.Windows.Forms.Padding(2);
             this.Txt_Peticiones.Name = "Txt_Peticiones";
             this.Txt_Peticiones.Size = new System.Drawing.Size(224, 25);
@@ -236,7 +272,7 @@ namespace Capa_Vista_Reservas_Hotel
             // Lbl_Peticiones_Especiales
             // 
             this.Lbl_Peticiones_Especiales.AutoSize = true;
-            this.Lbl_Peticiones_Especiales.Location = new System.Drawing.Point(10, 157);
+            this.Lbl_Peticiones_Especiales.Location = new System.Drawing.Point(10, 234);
             this.Lbl_Peticiones_Especiales.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Lbl_Peticiones_Especiales.Name = "Lbl_Peticiones_Especiales";
             this.Lbl_Peticiones_Especiales.Size = new System.Drawing.Size(167, 17);
@@ -249,9 +285,9 @@ namespace Capa_Vista_Reservas_Hotel
             this.Lbl_Numero_Huespedes.Location = new System.Drawing.Point(10, 116);
             this.Lbl_Numero_Huespedes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Lbl_Numero_Huespedes.Name = "Lbl_Numero_Huespedes";
-            this.Lbl_Numero_Huespedes.Size = new System.Drawing.Size(174, 17);
+            this.Lbl_Numero_Huespedes.Size = new System.Drawing.Size(171, 17);
             this.Lbl_Numero_Huespedes.TabIndex = 7;
-            this.Lbl_Numero_Huespedes.Text = "Numero de Huéspedes:";
+            this.Lbl_Numero_Huespedes.Text = "Maximo de huéspedes:";
             // 
             // Lbl_Fecha_Salida
             // 
@@ -310,6 +346,7 @@ namespace Capa_Vista_Reservas_Hotel
             // 
             // Gpb_Informacion_Huesped
             // 
+            this.Gpb_Informacion_Huesped.Controls.Add(this.Cmb_Numero_Documento);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Lbl_Apellido);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Lbl_Nombre);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Txt_Tarifa);
@@ -319,7 +356,6 @@ namespace Capa_Vista_Reservas_Hotel
             this.Gpb_Informacion_Huesped.Controls.Add(this.Btn_Buscar_Huesped);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Txt_Puntos_Huesped);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Lbl_Puntos_Disponibles);
-            this.Gpb_Informacion_Huesped.Controls.Add(this.Txt_Numero_Documento);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Cmb_Habitacion);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Lbl_Habitacion);
             this.Gpb_Informacion_Huesped.Controls.Add(this.Cmb_Tipo_Documento);
@@ -414,13 +450,6 @@ namespace Capa_Vista_Reservas_Hotel
             this.Lbl_Puntos_Disponibles.TabIndex = 8;
             this.Lbl_Puntos_Disponibles.Text = "Puntos disponibles";
             // 
-            // Txt_Numero_Documento
-            // 
-            this.Txt_Numero_Documento.Location = new System.Drawing.Point(235, 28);
-            this.Txt_Numero_Documento.Name = "Txt_Numero_Documento";
-            this.Txt_Numero_Documento.Size = new System.Drawing.Size(164, 25);
-            this.Txt_Numero_Documento.TabIndex = 7;
-            // 
             // Cmb_Habitacion
             // 
             this.Cmb_Habitacion.BackColor = System.Drawing.SystemColors.Window;
@@ -464,22 +493,20 @@ namespace Capa_Vista_Reservas_Hotel
             this.Lbl_Huesped.TabIndex = 1;
             this.Lbl_Huesped.Text = "Huésped";
             // 
-            // Txt_Capacidad
+            // Cmb_Numero_Documento
             // 
-            this.Txt_Capacidad.Location = new System.Drawing.Point(210, 113);
-            this.Txt_Capacidad.Name = "Txt_Capacidad";
-            this.Txt_Capacidad.ReadOnly = true;
-            this.Txt_Capacidad.Size = new System.Drawing.Size(100, 25);
-            this.Txt_Capacidad.TabIndex = 32;
-            this.Txt_Capacidad.TabStop = false;
+            this.Cmb_Numero_Documento.FormattingEnabled = true;
+            this.Cmb_Numero_Documento.Location = new System.Drawing.Point(235, 28);
+            this.Cmb_Numero_Documento.Name = "Cmb_Numero_Documento";
+            this.Cmb_Numero_Documento.Size = new System.Drawing.Size(121, 25);
+            this.Cmb_Numero_Documento.TabIndex = 113;
             // 
             // Frm_Reservas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1146, 632);
+            this.ClientSize = new System.Drawing.Size(1146, 702);
             this.Controls.Add(this.Btn_Limpiar);
-            this.Controls.Add(this.Btn_Nuevo);
             this.Controls.Add(this.Gpb_Datos);
             this.Controls.Add(this.Lbl_Control_Reservas);
             this.Controls.Add(this.Btn_Guardar);
@@ -490,6 +517,8 @@ namespace Capa_Vista_Reservas_Hotel
             this.Load += new System.EventHandler(this.Frm_Reservas_Load);
             this.Gpb_Datos.ResumeLayout(false);
             this.Gpb_Datos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Ninos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Adultos)).EndInit();
             this.Gpb_Informacion_Huesped.ResumeLayout(false);
             this.Gpb_Informacion_Huesped.PerformLayout();
             this.ResumeLayout(false);
@@ -500,7 +529,6 @@ namespace Capa_Vista_Reservas_Hotel
         #endregion
 
         private System.Windows.Forms.Button Btn_Limpiar;
-        private System.Windows.Forms.Button Btn_Nuevo;
         private System.Windows.Forms.GroupBox Gpb_Datos;
         private System.Windows.Forms.Button Btn_Calcular_Total;
         private System.Windows.Forms.TextBox Txt_Buffet_Descripcion;
@@ -529,11 +557,15 @@ namespace Capa_Vista_Reservas_Hotel
         private System.Windows.Forms.Button Btn_Buscar_Huesped;
         private System.Windows.Forms.TextBox Txt_Puntos_Huesped;
         private System.Windows.Forms.Label Lbl_Puntos_Disponibles;
-        private System.Windows.Forms.TextBox Txt_Numero_Documento;
         private System.Windows.Forms.ComboBox Cmb_Habitacion;
         private System.Windows.Forms.Label Lbl_Habitacion;
         private System.Windows.Forms.ComboBox Cmb_Tipo_Documento;
         private System.Windows.Forms.Label Lbl_Huesped;
         private System.Windows.Forms.TextBox Txt_Capacidad;
+        private System.Windows.Forms.NumericUpDown Nud_Ninos;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown Nud_Adultos;
+        private System.Windows.Forms.ComboBox Cmb_Numero_Documento;
     }
 }

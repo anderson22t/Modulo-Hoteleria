@@ -101,8 +101,14 @@ namespace Capa_Vista_Reservas_Hotel
             if (int.TryParse(Cmb_Habitacion.SelectedValue.ToString(), out int idHab))
             {
                 Txt_Tarifa.Text = controlador.ObtenerTarifaHabitacion(idHab).ToString("F2");
-                Txt_Capacidad_Mod.Text = controlador.ObtenerCapacidadHabitacion(idHab).ToString();
 
+                int capacidad = controlador.ObtenerCapacidadHabitacion(idHab);
+                Txt_Capacidad_Mod.Text = capacidad.ToString();
+
+                // 👉 Ajustamos numeric para adultos y niños
+                ConfigurarNumeric_Modificar(capacidad);
+
+                // Fechas ocupadas
                 CargarFechasOcupadas(idHab, _rangoActualInicio, _rangoActualFin);
             }
         }
@@ -207,6 +213,9 @@ namespace Capa_Vista_Reservas_Hotel
                     Cmb_Habitacion.SelectedValue = idHab;
                     Txt_Tarifa.Text = controlador.ObtenerTarifaHabitacion(idHab).ToString("F2");
                     Txt_Capacidad_Mod.Text = controlador.ObtenerCapacidadHabitacion(idHab).ToString();
+                    ConfigurarNumeric_Modificar(
+                        controlador.ObtenerCapacidadHabitacion(idHab)
+                    );
                 }
                 else
                 {
@@ -325,6 +334,23 @@ namespace Capa_Vista_Reservas_Hotel
                     return;
                 }
 
+                int capacidad = int.Parse(Txt_Capacidad_Mod.Text);
+                int adultos = (int)Nud_Adultos_Mod.Value;
+                int ninos = (int)Nud_Ninos_Mod.Value;
+                int numHuespedes = adultos + ninos;
+
+                if (numHuespedes > capacidad)
+                {
+                    MessageBox.Show(
+                        $"La habitación solo permite {capacidad} personas.\n" +
+                        $"Usted seleccionó {numHuespedes}.",
+                        "Capacidad excedida",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    return; 
+                }
+
                 controlador.ActualizarReserva(
                     iDReservaSeleccionada,
                     Convert.ToInt32(Cmb_Habitacion.SelectedValue),
@@ -334,8 +360,10 @@ namespace Capa_Vista_Reservas_Hotel
                     sEstadoNuevo,
                     total,
                     sEtadoAnterior,
-                    iIdHuespedActual
+                    iIdHuespedActual,
+                    numHuespedes   
                 );
+
 
                 MessageBox.Show("Reserva actualizada correctamente.");
                 Txt_Buscar_Reserva_TextChanged(null, null);
@@ -350,6 +378,7 @@ namespace Capa_Vista_Reservas_Hotel
                 );
             }
         }
+
 
         private void InicializarPopupCalendario()
         {
@@ -458,5 +487,52 @@ namespace Capa_Vista_Reservas_Hotel
                 _fechasOcupadas = new HashSet<DateTime>();
             }
         }
+
+        private void ConfigurarNumeric_Modificar(int capacidad)
+        {
+            // Adultos mínimo 1
+            Nud_Adultos_Mod.Minimum = 1;
+            Nud_Adultos_Mod.Maximum = capacidad;
+
+            // Niños mínimo 0
+            Nud_Ninos_Mod.Minimum = 0;
+            Nud_Ninos_Mod.Maximum = capacidad;
+
+            // Reset valores
+            Nud_Adultos_Mod.Value = 1;
+            Nud_Ninos_Mod.Value = 0;
+
+            // Eventos de validación
+            Nud_Adultos_Mod.ValueChanged -= ValidarCapacidadNumeric_Modificar;
+            Nud_Ninos_Mod.ValueChanged -= ValidarCapacidadNumeric_Modificar;
+
+            Nud_Adultos_Mod.ValueChanged += ValidarCapacidadNumeric_Modificar;
+            Nud_Ninos_Mod.ValueChanged += ValidarCapacidadNumeric_Modificar;
+        }
+
+        private void ValidarCapacidadNumeric_Modificar(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Txt_Capacidad_Mod.Text)) return;
+
+            int capacidad = int.Parse(Txt_Capacidad_Mod.Text);
+            int adultos = (int)Nud_Adultos_Mod.Value;
+            int ninos = (int)Nud_Ninos_Mod.Value;
+
+            if (adultos + ninos > capacidad)
+            {
+                MessageBox.Show(
+                    $"La habitación permite máximo {capacidad} personas.",
+                    "Capacidad excedida",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                // Reset seguro
+                Nud_Ninos_Mod.Value = 0;
+            }
+        }
+
+
+
     }
 }

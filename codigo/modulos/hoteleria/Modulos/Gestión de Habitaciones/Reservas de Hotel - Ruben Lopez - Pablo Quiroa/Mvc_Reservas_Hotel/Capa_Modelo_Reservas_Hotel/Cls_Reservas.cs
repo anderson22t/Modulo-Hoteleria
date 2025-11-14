@@ -102,6 +102,30 @@ namespace Capa_Modelo_Reservas_Hotel
             }
         }
 
+        public DataTable ObtenerDocumentosPorTipo(string tipo)
+        {
+            DataTable dt = new DataTable();
+            string query = @"SELECT Cmp_Numero_Documento 
+                     FROM Tbl_Huesped 
+                     WHERE Cmp_Tipo_Documento = ? 
+                     ORDER BY Cmp_Numero_Documento ASC";
+
+            using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@tipo", tipo);
+
+                using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
+
+
         public void InsertarReserva(int iDHuesped, int iDHabitacion, int iDBuffet, int iNumHuespedes,
                                     DateTime dFechaEntrada, DateTime dFechaSalida,
                                     string sPeticiones, string sEstado, decimal dTotal)
@@ -213,18 +237,20 @@ namespace Capa_Modelo_Reservas_Hotel
         }
 
         public void ActualizarReserva(int iDReserva, int iDHabitacion, DateTime dEntrada, DateTime dSalida,
-                                      string sPeticiones, string sEstado, decimal dTotal,
-                                      string estadoAnterior, int idHuesped)
+                              string sPeticiones, string sEstado, decimal dTotal,
+                              string estadoAnterior, int idHuesped, int numHuespedes)
         {
             string sql = @"
-                UPDATE `Tbl_Reserva`
-                SET Fk_Id_Habitacion = ?,
-                    Cmp_Fecha_Entrada = ?,
-                    Cmp_Fecha_Salida  = ?,
-                    Cmp_Peticiones_Especiales = ?,
-                    Cmp_Estado_Reserva = ?,
-                    Cmp_Total_Reserva  = ?
-                WHERE Pk_Id_Reserva = ?;";
+        UPDATE Tbl_Reserva
+        SET 
+            Fk_Id_Habitacion = ?,
+            Cmp_Fecha_Entrada = ?,
+            Cmp_Fecha_Salida  = ?,
+            Cmp_Peticiones_Especiales = ?,
+            Cmp_Estado_Reserva = ?,
+            Cmp_Total_Reserva  = ?,
+            Cmp_Num_Huespedes = ?
+        WHERE Pk_Id_Reserva = ?;";
 
             using (var conn = conexion.conexion())
             using (var cmd = new OdbcCommand(sql, conn))
@@ -234,24 +260,24 @@ namespace Capa_Modelo_Reservas_Hotel
                 cmd.Parameters.Add(null, OdbcType.Date).Value = dSalida.Date;
                 cmd.Parameters.Add(null, OdbcType.VarChar, 255).Value = sPeticiones ?? "";
                 cmd.Parameters.Add(null, OdbcType.VarChar, 20).Value = sEstado;
-
-                // Double para DECIMAL
                 cmd.Parameters.Add(null, OdbcType.Double).Value = Convert.ToDouble(dTotal);
-
+                cmd.Parameters.Add(null, OdbcType.Int).Value = numHuespedes;
                 cmd.Parameters.Add(null, OdbcType.Int).Value = iDReserva;
+
                 cmd.ExecuteNonQuery();
             }
 
-            // ==== CONTROL DE PUNTOS POR CAMBIO DE ESTADO ====
-
+            // Puntos según estado
             if (!estadoAnterior.Equals(sEstado, StringComparison.OrdinalIgnoreCase))
             {
                 if (estadoAnterior == "Confirmada" && sEstado != "Confirmada")
                     RestarPuntosHuesped(idHuesped);
+
                 else if (estadoAnterior != "Confirmada" && sEstado == "Confirmada")
                     AgregarPuntosHuesped(idHuesped);
             }
         }
+
         // ==================   SISTEMA DE PUNTOS   =================
 
         public void AgregarPuntosHuesped(int iIdHuesped)

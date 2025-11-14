@@ -87,17 +87,24 @@ namespace Capa_Controlador_Reservas_Hotel
 
         public int ObtenerCapacidadHabitacion(int idHabitacion) => modeloReserva.ObtenerCapacidadHabitacion(idHabitacion);
 
-        public void ActualizarReserva(int iDReserva, int iDHabitacion, DateTime dFechaEntrada, DateTime dFechaSalida,
-                                      string sPeticiones, string sEstadoNuevo, decimal dTotal,
-                                      string sEstadoAnterior, int idHuesped)
+        public DataTable ObtenerDocumentosPorTipo(string tipo)
+        {
+            return modeloReserva.ObtenerDocumentosPorTipo(tipo);
+        }
+
+
+
+        public void ActualizarReserva(
+    int iDReserva, int iDHabitacion, DateTime dFechaEntrada, DateTime dFechaSalida,
+    string sPeticiones, string sEstadoNuevo, decimal dTotal,
+    string sEstadoAnterior, int idHuesped,
+    int numHuespedes)
         {
             modeloReserva.ActualizarReserva(
                 iDReserva, iDHabitacion, dFechaEntrada, dFechaSalida,
-                sPeticiones, sEstadoNuevo, dTotal,
-                sEstadoAnterior, idHuesped
+                sPeticiones, sEstadoNuevo, dTotal, sEstadoAnterior, idHuesped, numHuespedes
             );
 
-            // Manejo de puntos según cambio de estado
             int puntosActuales = modeloReserva.ObtenerPuntosHuesped(idHuesped);
 
             if (sEstadoAnterior != "Confirmada" && sEstadoNuevo == "Confirmada")
@@ -106,29 +113,17 @@ namespace Capa_Controlador_Reservas_Hotel
             }
             else if (sEstadoAnterior == "Confirmada" && sEstadoNuevo != "Confirmada")
             {
-                int nuevosPuntos = Math.Max(puntosActuales - 15, 0);
-                modeloReserva.ActualizarPuntosHuesped(idHuesped, nuevosPuntos);
+                int nuevos = Math.Max(0, puntosActuales - 15);
+                modeloReserva.ActualizarPuntosHuesped(idHuesped, nuevos);
             }
         }
+
 
         // ==================== FECHAS OCUPADAS ====================
 
         public HashSet<DateTime> ExpandirFechasOcupadas(int idHabitacion)
             => modeloReserva.ExpandirFechasOcupadas(idHabitacion);
 
-        // ==================== SALUD DE CONEXIÓN ====================
 
-        public bool ProbarConexion()
-        {
-            try
-            {
-                Cls_Conexion c = new Cls_Conexion();
-                using (OdbcConnection conn = c.conexion())
-                {
-                    return conn.State == ConnectionState.Open;
-                }
-            }
-            catch { return false; }
-        }
     }
 }

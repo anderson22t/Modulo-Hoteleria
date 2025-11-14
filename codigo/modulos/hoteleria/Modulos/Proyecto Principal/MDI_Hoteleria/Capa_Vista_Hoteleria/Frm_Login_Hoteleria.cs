@@ -21,6 +21,7 @@ namespace Capa_Vista_Hoteleria
         public Frm_Login_Hoteleria()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             txtContrasena.UseSystemPasswordChar = true;
             this.FormClosing += Frm_Login_FormClosing;
         }
