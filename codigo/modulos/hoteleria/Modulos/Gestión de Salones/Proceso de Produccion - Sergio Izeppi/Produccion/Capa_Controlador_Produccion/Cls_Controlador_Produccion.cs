@@ -83,10 +83,6 @@ namespace Capa_Controlador_Produccion
             return sentencias.fun_CargarRoomServices();
         }
 
-        public DataTable fun_MostrarDetalles()
-        {
-            return sentencias.fun_CargarDetalles();
-        }
 
         public DataTable fun_MostrarDetallesPorRoom(int iIdRoom)
         {
